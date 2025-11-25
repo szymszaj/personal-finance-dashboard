@@ -142,7 +142,7 @@ export default function DashboardPage() {
                 type="month"
                 value={currentMonth}
                 onChange={(e) => setCurrentMonth(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
               />
               <button
                 onClick={handleLogout}

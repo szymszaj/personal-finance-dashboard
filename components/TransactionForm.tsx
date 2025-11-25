@@ -63,8 +63,8 @@ export default function TransactionForm({ userId, month, onSuccess }: Props) {
         </label>
         <select
           value={type}
-          onChange={(e) => setType(e.target.value as "expense" | "savings")}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          onChange={(e) => setType(e.target.value as 'expense' | 'savings')}
+          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
         >
           <option value="expense">Wydatek</option>
           <option value="savings">Oszczędność</option>
@@ -79,7 +79,7 @@ export default function TransactionForm({ userId, month, onSuccess }: Props) {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
           >
             {CATEGORIES.map((cat) => (
               <option key={cat} value={cat}>
@@ -100,7 +100,7 @@ export default function TransactionForm({ userId, month, onSuccess }: Props) {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
           placeholder="100"
         />
       </div>
@@ -114,7 +114,7 @@ export default function TransactionForm({ userId, month, onSuccess }: Props) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
           placeholder="Zakupy spożywcze"
         />
       </div>
@@ -128,7 +128,7 @@ export default function TransactionForm({ userId, month, onSuccess }: Props) {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
         />
       </div>
 

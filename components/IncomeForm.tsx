@@ -46,7 +46,6 @@ export default function IncomeForm({ userId, month, onSuccess }: Props) {
     setLoading(true);
 
     if (editing) {
-      // Aktualizuj istniejący wpis
       await supabase
         .from("monthly_income")
         .update({
@@ -56,7 +55,6 @@ export default function IncomeForm({ userId, month, onSuccess }: Props) {
         .eq("user_id", userId)
         .eq("month", month);
     } else {
-      // Dodaj nowy wpis
       await supabase.from("monthly_income").insert({
         user_id: userId,
         amount: parseFloat(amount),
@@ -81,7 +79,7 @@ export default function IncomeForm({ userId, month, onSuccess }: Props) {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           required
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
           placeholder="5000"
         />
       </div>
@@ -94,7 +92,7 @@ export default function IncomeForm({ userId, month, onSuccess }: Props) {
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900"
           placeholder="Pensja, bonus..."
         />
       </div>
