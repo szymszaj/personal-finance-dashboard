@@ -32,6 +32,7 @@ export default function TransactionList({ userId, month, onUpdate }: Props) {
   }, [userId, month, supabase]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadTransactions();
   }, [loadTransactions]);
 
