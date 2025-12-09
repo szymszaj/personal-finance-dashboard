@@ -4,12 +4,14 @@ import { useState } from "react";
 import { createSupabaseClient } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import SuccessTransition from "@/components/transitions/SuccessTransition";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const router = useRouter();
   const supabase = createSupabaseClient();
 
@@ -27,14 +29,26 @@ export default function LoginPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      router.push("/dashboard");
-      router.refresh();
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/dashboard");
+        router.refresh();
+      }, 1500);
     }
   };
 
+  if (success) {
+    return (
+      <SuccessTransition
+        title="Zalogowano pomyślnie!"
+        subtitle="Przekierowuję do panelu..."
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-slide-up">
         <h1 className="text-3xl font-bold text-center mb-2 text-gray-800">
           Panel Finansowy
         </h1>

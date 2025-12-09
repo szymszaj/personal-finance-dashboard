@@ -14,6 +14,7 @@ import SummaryCards from "@/components/SummaryCards";
 import ChartsSection from "@/components/ChartsSection";
 import FormsSection from "@/components/FormsSection";
 import TransactionList from "@/components/TransactionList";
+import LoadingTransition from "@/components/transitions/LoadingTransition";
 
 export default function DashboardPage() {
   const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
@@ -21,14 +22,13 @@ export default function DashboardPage() {
     format(new Date(), "yyyy-MM")
   );
   const [summary, setSummary] = useState<MonthlySummary | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const [showContent, setShowContent] = useState(false);
   const router = useRouter();
   const supabase = createSupabaseClient();
 
   const loadData = useCallback(
     async (userId: string, month: string) => {
-      setLoading(true);
-
       const { data: incomeData } = await supabase
         .from("monthly_income")
         .select("*")
@@ -75,7 +75,10 @@ export default function DashboardPage() {
         remaining: income - fixedExpenses - randomExpenses - savings,
       });
 
-      setLoading(false);
+      setTimeout(() => {
+        setInitialLoad(false);
+        setTimeout(() => setShowContent(true), 100);
+      }, 300);
     },
     [supabase]
   );
@@ -104,24 +107,21 @@ export default function DashboardPage() {
     }
   };
 
-  if (!user) {
+  if (!user || initialLoad) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Ładowanie...</div>
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Ładowanie...</div>
-      </div>
+      <LoadingTransition
+        title="Panel Finansowy"
+        subtitle="Przygotowuję Twoje dane..."
+      />
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div
+      className={`min-h-screen bg-gray-50 transition-opacity duration-500 ${
+        showContent ? "opacity-100" : "opacity-0"
+      }`}
+    >
       <DashboardHeader
         currentMonth={currentMonth}
         onMonthChange={setCurrentMonth}
@@ -129,21 +129,51 @@ export default function DashboardPage() {
       />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <SummaryCards summary={summary} />
+        <div
+          className={`transition-all duration-500 delay-100 ${
+            showContent
+              ? "translate-y-0 opacity-100"
+              : "translate-y-4 opacity-0"
+          }`}
+        >
+          <SummaryCards summary={summary} />
+        </div>
 
-        <ChartsSection
-          summary={summary}
-          userId={user.id}
-          month={currentMonth}
-        />
+        <div
+          className={`transition-all duration-500 delay-200 ${
+            showContent
+              ? "translate-y-0 opacity-100"
+              : "translate-y-4 opacity-0"
+          }`}
+        >
+          <ChartsSection
+            summary={summary}
+            userId={user.id}
+            month={currentMonth}
+          />
+        </div>
 
-        <FormsSection
-          userId={user.id}
-          month={currentMonth}
-          onSuccess={refreshData}
-        />
+        <div
+          className={`transition-all duration-500 delay-300 ${
+            showContent
+              ? "translate-y-0 opacity-100"
+              : "translate-y-4 opacity-0"
+          }`}
+        >
+          <FormsSection
+            userId={user.id}
+            month={currentMonth}
+            onSuccess={refreshData}
+          />
+        </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm">
+        <div
+          className={`bg-white p-6 rounded-xl shadow-sm transition-all duration-500 delay-[400ms] ${
+            showContent
+              ? "translate-y-0 opacity-100"
+              : "translate-y-4 opacity-0"
+          }`}
+        >
           <h2 className="text-lg font-semibold mb-4">Historia transakcji</h2>
           <TransactionList
             userId={user.id}
